@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subway Series | Análisis de Marketing</title>
+    <!-- Usaremos una tipografía muy gruesa y moderna similar a la estética de Subway/KitKat -->
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    
+    <!-- Chart.js para Análisis Colombia -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- Navegación -->
+    <nav class="navbar">
+        <a href="https://www.subway.com/es-CO" target="_blank" class="logo">SUBWAY</a>
+        <div class="menu">
+            <a href="#historia">Historia</a>
+            <a href="#menu-interactivo">Menú</a>
+            <a href="#social-listening">Social</a>
+            <a href="#mapa-global">Mapa</a>
+            <a href="#promociones">Promos</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section con Video de YouTube -->
+    <header class="hero">
+        <div class="video-container">
+            <iframe 
+                src="https://www.youtube.com/embed/O4Z2LTe7xZU?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=O4Z2LTe7xZU&start=0" 
+                frameborder="0" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen 
+                class="yt-bg-video">
+            </iframe>
+            <div class="video-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="reveal-text">NUEVOS<br><span class="yellow-text">SABORES.</span><br>NUEVA<br><span class="yellow-text">ERA.</span></h1>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+    </header>
+
+    <!-- Sección de Introducción Animada -->
+    <section class="intro bg-green">
+        <div class="container">
+            <h2 class="slide-up">MÁS QUE UN SÁNDWICH, <br> UNA DECLARACIÓN.</h2>
+            <p class="fade-in">El mercado de Fast Food en Colombia es altamente competitivo. Este dashboard interactivo presenta el análisis de marketing global y local de Subway.</p>
+        </div>
+    </section>
+
+    <!-- Características Únicas (Estilo KitKat) -->
+    <section id="features" class="features-section bg-green">
+        <div class="container text-center" style="padding-top: 0;">
+            <h2 class="slide-up white-text" style="font-size: 3rem;">LA FRESCURA Y TECNOLOGÍA ÚNICA DE SUBWAY</h2>
+            
+            <div class="features-grid fade-in">
+                <div class="feature-item">
+                    <div class="feature-img-wrapper">
+                        <img src="img/veggie_sandwich_1778790301630.png" alt="Ingredientes Frescos">
+                    </div>
+                    <h3 class="white-text">Ingredientes Frescos</h3>
+                    <p class="white-text">Vegetales cortados diariamente para garantizar la máxima crocancia y frescura en cada mordisco.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-img-wrapper">
+                        <img src="img/teriyaki_chicken_sandwich_1778789926622.png" alt="Recetas Únicas">
+                    </div>
+                    <h3 class="white-text">Recetas Únicas</h3>
+                    <p class="white-text">Salsas exclusivas y proteínas preparadas bajo estrictos estándares de calidad mundial.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-img-wrapper">
+                        <img src="img/classic_subway_sandwich_1778789827697.png" alt="Personalización Total">
+                    </div>
+                    <h3 class="white-text">Personalización Total</h3>
+                    <p class="white-text">Tú tienes el control absoluto. Millones de combinaciones posibles sobre nuestro pan recién horneado.</p>
+                </div>
+            </div>
+            <a href="#menu-interactivo" class="btn-feature fade-in">DESCUBRE MÁS</a>
+        </div>
+    </section>
+
+    <!-- Encuesta en Tiempo Real -->
+    <section id="encuesta" class="survey-section bg-yellow">
+        <div class="container">
+            <h2 class="dark-text text-center slide-up">¡QUEREMOS <span class="white-text">ESCUCHARTE!</span></h2>
+            <p class="text-center dark-text fade-in" style="margin-bottom: 2rem;">Los resultados se actualizarán en tiempo real en nuestro panel de Análisis.</p>
+            
+            <form id="survey-form" class="survey-form fade-in">
+                <div class="form-group">
+                    <label>¿Qué opinas de la marca Subway hoy?</label>
+                    <select id="survey-opinion" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="excelente">Excelente / Saludable</option>
+                        <option value="buena">Buena / Rápida</option>
+                        <option value="regular">Regular / Costosa</option>
+                        <option value="mala">Mala / Aburrida</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>¿Probarías los nuevos sabores de Subway Series?</label>
+                    <select id="survey-series" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="si">¡Sí, definitivamente!</option>
+                        <option value="talvez">Tal vez, si hay promoción</option>
+                        <option value="no">No, prefiero armar el mío</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit">Enviar Respuestas</button>
+            </form>
+            <div id="survey-thanks" style="display:none; text-align:center; padding: 2rem; background: var(--subway-green); color: white; border-radius: 10px; margin-top: 2rem;">
+                <h3>¡Gracias! Tu opinión ya está en la base de datos en tiempo real.</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Sobre Nosotros (Historia) -->
+    <section id="historia" class="history-section bg-dark">
+        <div class="container">
+            <div class="split-layout">
+                <div class="split-visual slide-right">
+                    <img src="img/vintage_sandwich_shop_1778789769248.png" alt="Primer restaurante Subway 1965" class="history-img" />
+                </div>
+                <div class="split-content slide-left">
+                    <h2 class="white-text">NUESTROS <span class="yellow-text">INICIOS</span></h2>
+                    <h3 class="green-text" style="color: var(--subway-green); margin-bottom: 1rem; font-family: var(--font-heading);">Propósito: "EAT FRESH"</h3>
+                    <p class="white-text" style="margin-bottom: 1rem;">Nuestra historia comienza en 1965 en Bridgeport, Connecticut. Fred DeLuca, un joven de 17 años, pidió prestados $1,000 a un amigo de la familia, el Dr. Peter Buck, para abrir una pequeña tienda de sándwiches y poder pagar sus estudios universitarios de medicina.</p>
+                    <p class="white-text">Lo que empezó como "Pete's Super Submarines" evolucionó gracias a una idea revolucionaria: <strong>que el cliente viera exactamente cómo se preparaba su comida con ingredientes frescos.</strong> Bajo el lema "Eat Fresh", el sistema de franquicias de bajo costo impulsó a Subway a convertirse en la cadena de restaurantes con más puntos de venta en todo el mundo, superando a los gigantes tradicionales.</p>
+                    <div class="history-stats fade-in">
+                        <div class="h-stat"><strong>1965</strong><span>Fundación</span></div>
+                        <div class="h-stat"><strong>+37,000</strong><span>Restaurantes</span></div>
+                        <div class="h-stat"><strong>100+</strong><span>Países</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Menú Interactivo (Clon) -->
+    <section id="menu-interactivo" class="menu-section">
+        <div class="container">
+            <h2 class="dark-text text-center slide-up">DESCUBRE NUESTRO <span class="subway-green-text">MENÚ</span></h2>
+            
+            <!-- Controles de Filtro -->
+            <div class="menu-controls fade-in">
+                <div class="categories-scroll">
+                    <button class="cat-btn active" data-cat="todos">Todos</button>
+                    <button class="cat-btn" data-cat="promociones">Promociones</button>
+                    <button class="cat-btn" data-cat="series">Subway Series</button>
+                    <button class="cat-btn" data-cat="clasicos">Clásicos</button>
+                </div>
+                <div class="filters">
+                    <select id="filter-diet">
+                        <option value="todos">Cualquier dieta</option>
+                        <option value="vegetariano">Vegetariano 🌱</option>
+                    </select>
+                    <select id="sort-price">
+                        <option value="default">Ordenar por</option>
+                        <option value="price-asc">Precio: Menor a Mayor</option>
+                        <option value="price-desc">Precio: Mayor a Menor</option>
+                        <option value="rating">Mejores Calificados</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Grid de Productos -->
+            <div class="menu-grid" id="menu-grid">
+                <!-- Se llena con JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Análisis Competitivo Offline (Publicidad Infoanalisis) -->
+    <section id="analisis" class="analysis-section bg-dark">
+        <div class="container">
+            <h2 class="section-title slide-up">INVERSIÓN TRADICIONAL <span class="yellow-text">2025/2026</span></h2>
+            
+            <div class="cards-grid">
+                <!-- Tarjeta Subway -->
+                <div class="card brand-subway slide-up">
+                    <div class="card-icon"><i class="fa-solid fa-bread-slice"></i></div>
+                    <h3>SUBWAY</h3>
+                    <div class="amount">$4.9B</div>
+                    <p>Posición #4 en Inversión. Enfoque estratégico para retar a los líderes.</p>
+                </div>
+                
+                <!-- Tarjeta KFC -->
+                <div class="card brand-kfc slide-up" style="animation-delay: 0.1s;">
+                    <div class="card-icon"><i class="fa-solid fa-drumstick-bite"></i></div>
+                    <h3>KFC</h3>
+                    <div class="amount">$13.6B</div>
+                    <p>Líder de categoría. Fuerte presencia en vía pública y TV.</p>
+                </div>
+
+                <!-- Tarjeta McDonald's -->
+                <div class="card brand-mcd slide-up" style="animation-delay: 0.2s;">
+                    <div class="card-icon"><i class="fa-solid fa-hamburger"></i></div>
+                    <h3>MCDONALD'S</h3>
+                    <div class="amount">$11.6B</div>
+                    <p>Dominio masivo de alcance tradicional.</p>
+                </div>
+            </div>
+
+            <div class="stats-row fade-in">
+                <div class="stat-box">
+                    <h4>TV Suscripción</h4>
+                    <span class="stat-number">$12.18B</span>
+                    <span class="stat-label">Total Industria</span>
+                </div>
+                <div class="stat-box">
+                    <h4>Vallas y Exteriores</h4>
+                    <span class="stat-number">$10.18B</span>
+                    <span class="stat-label">Total Industria</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Análisis Digital -->
+    <section id="digital" class="digital-section bg-yellow">
+        <div class="container">
+            <div class="split-layout">
+                <div class="split-content slide-right">
+                    <h2 class="dark-text">DOMINIO <br> DIGITAL <br> <span class="white-text">Q1 2026</span></h2>
+                    <p class="dark-text">Las Redes Sociales (Facebook/Instagram) absorben el <strong>88%</strong> del presupuesto digital de la categoría, alcanzando ~$2.19B COP. McDonald's ejerce gran presión aquí.</p>
+                    <ul class="digital-list">
+                        <li><i class="fa-brands fa-facebook"></i> Redes Sociales: 88%</li>
+                        <li><i class="fa-solid fa-newspaper"></i> Portales de Noticias: 5.4%</li>
+                        <li><i class="fa-brands fa-youtube"></i> Plataformas de Video: 5%</li>
+                    </ul>
+                </div>
+                <div class="split-visual slide-left">
+                    <div class="chart-circle">
+                        <div class="circle-inner">
+                            <span class="percent">88%</span>
+                            <span class="label">Social</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Análisis Publicitario Detallado (Consulta Infoanalisis) -->
+    <section id="publicidad" class="ads-section bg-dark">
+        <div class="container">
+            <h2 class="slide-up text-center white-text">RETORNO PUBLICITARIO <span class="yellow-text">INFOANÁLISIS</span></h2>
+            <div class="cards-grid">
+                <div class="card brand-subway fade-in">
+                    <h3>Mejor Anuncio</h3>
+                    <p>"MCCOMBO DIA 19900 LUN DOM" (McDonald's) lideró inserciones en Autopista Norte (Bogotá).</p>
+                </div>
+                <div class="card brand-kfc fade-in" style="animation-delay: 0.1s;">
+                    <h3>Impacto Vallas</h3>
+                    <p>KFC ("CUBETA POLLO") acaparó Autopista Sur y Av. Boyacá con una inversión de ~$14.2M por valla doble.</p>
+                </div>
+                <div class="card fade-in" style="border-color: #aaa; animation-delay: 0.2s;">
+                    <h3>Percepción del Público</h3>
+                    <p>Alta recordación visual en la franja "Centro Bogotá", pero Subway gana terreno en digital con experiencias inmersivas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Listening Dashboard -->
+    <section id="social-listening" class="social-section bg-yellow">
+        <div class="container">
+            <h2 class="dark-text text-center slide-up">SOCIAL <span class="white-text">LISTENING (SUBWAY)</span></h2>
+            <p class="text-center dark-text fade-in" style="margin-bottom: 2rem;"><em>Haz click en los íconos para ver el análisis detallado por red social de la marca.</em></p>
+            
+            <div class="social-icons fade-in">
+                <div class="s-icon" onclick="showSocialData('instagram')"><i class="fa-brands fa-instagram"></i></div>
+                <div class="s-icon" onclick="showSocialData('tiktok')"><i class="fa-brands fa-tiktok"></i></div>
+                <div class="s-icon" onclick="showSocialData('youtube')"><i class="fa-brands fa-youtube"></i></div>
+                <div class="s-icon" onclick="showSocialData('twitter')"><i class="fa-brands fa-x-twitter"></i></div>
+                <div class="s-icon" onclick="showSocialData('facebook')"><i class="fa-brands fa-facebook"></i></div>
+            </div>
+            
+            <div id="social-dashboard" class="social-dashboard slide-up">
+                <h3 id="sd-title">Selecciona una red social</h3>
+                <div class="sd-metrics">
+                    <div class="sd-box"><h4>Interacciones Totales</h4><span id="sd-vol">-</span></div>
+                    <div class="sd-box"><h4>Likes Promedio / Post</h4><span id="sd-likes">-</span></div>
+                    <div class="sd-box"><h4>Sentimiento</h4><span id="sd-sent">-</span></div>
+                    <div class="sd-box"><h4>Enfoque Estratégico</h4><span id="sd-topic">-</span></div>
+                </div>
+            </div>
+
+            <!-- Answer the Public / Trends -->
+            <div class="trends-box fade-in">
+                <h3><i class="fa-solid fa-magnifying-glass"></i> Búsquedas Específicas de la Marca (Google Trends)</h3>
+                <ul class="trends-list">
+                    <li>"Subway promociones hoy colombia" <span style="color:#008000;">Intención de Compra Alta</span></li>
+                    <li>"¿Es el pan de Subway saludable?" <span style="color:#ffcc00;">Preocupación sobre Ingredientes</span></li>
+                    <li>"Subway Series vs Armar mi propio sub" <span style="color:#008000;">Adopción de Nueva Estrategia</span></li>
+                    <li>"Menú vegetariano Subway precios" <span style="color:#008000;">Crecimiento de Nicho Plant-Based</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Noticias (Línea de Tiempo / Contexto) -->
+    <section id="noticias" class="news-section bg-dark">
+        <div class="container">
+            <h2 class="white-text text-center slide-up">CONTEXTO GLOBAL Y <span class="yellow-text">NOTICIAS</span></h2>
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Récord de Ventas en EE.UU.</h3>
+                        <p>Estados Unidos se mantiene como el país donde MÁS SE VENDE, con un crecimiento impulsado fuertemente por la renovación a "Subway Series".</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3 style="color: #E31837;">Superando "Funas" Pasadas</h3>
+                        <p>La marca ha superado exitosamente antiguas controversias sobre las medidas exactas de sus "Footlongs" (15cm/30cm) e ingredientes del pan, implementando políticas de transparencia total de ingredientes.</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>Expansión en Asia</h3>
+                        <p>Fuerte penetración en el mercado de India y Japón con adaptación masiva de menús vegetarianos y sabores locales (Teriyaki, Paneer).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transición GIGANTE COLOMBIA -->
+    <section id="colombia-title" class="colombia-transition">
+        <div class="colombia-bg"></div>
+        <h1 class="colombia-text pop-in">COLOMBIA <img src="https://flagcdn.com/w160/co.png" alt="Bandera Colombia" class="col-flag"></h1>
+    </section>
+
+    <!-- COLOMBIA ANALISIS PROFUNDO (MMM / CLARO STYLE) -->
+    <section id="colombia-analisis" class="mmm-section bg-dark">
+        <div class="container">
+            <h2 class="white-text text-center slide-up">ANÁLISIS PROFUNDO <span class="yellow-text">MMM</span></h2>
+            <p class="text-center white-text fade-in" style="margin-bottom: 3rem;">Basado en las bases de datos de Competencia e Inversión (Offline/Online)</p>
+            
+            <!-- Fila Superior de Gráficos -->
+            <div class="charts-row">
+                <!-- Gráfico de Pastel: Resultados de la Encuesta en Tiempo Real -->
+                <div class="chart-container fade-in">
+                    <h3 class="chart-title">Opinión Pública (Tiempo Real)</h3>
+                    <canvas id="surveyChart"></canvas>
+                </div>
+                
+                <!-- Gráfico Mix de Medios Subway -->
+                <div class="chart-container fade-in">
+                    <h3 class="chart-title">Mix de Inversión (Subway)</h3>
+                    <canvas id="mixChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Fila Central: Evolución Temporal y SOV -->
+            <div class="charts-row">
+                <div class="chart-container wide-chart fade-in">
+                    <h3 class="chart-title">Share of Voice (Inversión Competencia)</h3>
+                    <canvas id="sovChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Insights Finales -->
+            <div class="insights-grid fade-in">
+                <div class="insight-box">
+                    <h4><i class="fa-solid fa-tv"></i> Estrategia TV y Cines</h4>
+                    <p>Subway ha dirigido un gran porcentaje de su inversión hacia <strong>TV Nacional y Cines</strong> para mostrar la "apetitosidad" de los nuevos lanzamientos. A diferencia de KFC que domina en Exteriores, Subway busca la experiencia audiovisual.</p>
+                </div>
+                <div class="insight-box">
+                    <h4><i class="fa-solid fa-mobile-screen"></i> Retorno Digital</h4>
+                    <p>Las campañas digitales tienen un ROI más rápido gracias al redireccionamiento directo a las aplicaciones de Delivery (Rappi). La campaña de <em>Subway Series</em> es el eje principal de la estrategia digital.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mapa Global Interactivo -->
+    <section id="mapa-global" class="map-section bg-dark">
+        <div class="container text-center" style="padding-bottom: 0;">
+            <h2 class="slide-up white-text" style="margin-bottom: 1rem;">PRESENCIA GLOBAL <span class="yellow-text">Y REVIEWS</span></h2>
+            <button id="btn-geolocate" class="btn-geo fade-in"><i class="fa-solid fa-location-crosshairs"></i> Buscar mi restaurante más cercano</button>
+        </div>
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+    </section>
+
+    <!-- Carrusel de Promociones -->
+    <section id="promociones" class="promos-section bg-yellow">
+        <div class="container text-center">
+            <h2 class="dark-text slide-up">PROMOCIONES DEL <span class="white-text">MOMENTO</span></h2>
+            
+            <div class="carousel-container fade-in">
+                <button class="carousel-btn prev-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="carousel-track-container">
+                    <ul class="carousel-track">
+                        <!-- Llenado con JS -->
+                    </ul>
+                </div>
+                <button class="carousel-btn next-btn"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <p class="dark-text" style="margin-top: 1rem; font-weight: bold;">Noticias de: lac.newsroom.subway.com</p>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         NUEVO ANÁLISIS ESTRATÉGICO Y MMM
+    ================================================ -->
+    
+    <!-- CAPÍTULO 1 -->
+    <section id="capitulo-1" class="mmm-section bg-dark">
+        <div class="container">
+            <h2 class="slide-up white-text text-center">CAPÍTULO 1: <span class="yellow-text">LA BATALLA POR LA ATENCIÓN</span></h2>
+            <p class="text-center white-text fade-in" style="margin-bottom: 3rem;">¿Quién está capturando la atención del consumidor colombiano?</p>
+            
+            <div class="charts-row">
+                <div class="chart-container wide-chart fade-in">
+                    <h3 class="chart-title">Evolución Semanal (Google Trends)</h3>
+                    <canvas id="cap1LineChart"></canvas>
+                </div>
+            </div>
+            <div class="charts-row">
+                <div class="chart-container wide-chart fade-in">
+                    <h3 class="chart-title">Share of Search Mensual (%)</h3>
+                    <canvas id="cap1AreaChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="insight-box fade-in" style="margin-top: 2rem;">
+                <h4><i class="fa-solid fa-lightbulb"></i> Insight Estratégico</h4>
+                <p>McDonald's domina el volumen absoluto de búsquedas. Subway tiene un share estable pero bajo. Starbucks muestra picos estacionales. KFC tiene presencia constante pero sin dominio. Las semanas donde Subway sube indican alta correlación con su inversión publicitaria.</p>
+            </div>
+            
+            <p class="text-center white-text fade-in" style="margin-top: 2rem; font-style: italic;">"Si sabemos quién captura la atención, debemos entender qué inversión está detrás de esa atención."</p>
+        </div>
+    </section>
+
+    <!-- CAPÍTULO 2 -->
+    <section id="capitulo-2" class="mmm-section bg-yellow">
+        <div class="container">
+            <h2 class="slide-up dark-text text-center">CAPÍTULO 2: <span class="white-text">LA INVERSIÓN DETRÁS DE LA ATENCIÓN</span></h2>
+            <p class="text-center dark-text fade-in" style="margin-bottom: 3rem;">¿Cuánto y dónde está invirtiendo cada marca?</p>
+            
+            <div class="charts-row">
+                <div class="chart-container fade-in" style="background:#fff; border-color:#ccc;">
+                    <h3 class="chart-title" style="color:var(--dark);">Inversión Tradicional Mensual</h3>
+                    <canvas id="cap2BarChart"></canvas>
+                </div>
+                <div class="chart-container fade-in" style="background:#fff; border-color:#ccc;">
+                    <h3 class="chart-title" style="color:var(--dark);">Distribución Digital Q1 2026</h3>
+                    <canvas id="cap2RadarChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="insight-box fade-in" style="margin-top: 2rem; background: var(--dark); border-color: var(--subway-green);">
+                <h4 style="color: var(--white);"><i class="fa-solid fa-money-bill-wave"></i> Insight Estratégico</h4>
+                <p style="color: #ccc;">McDonald's tiene una brecha enorme entre su inversión y la de Subway. Subway concentra su inversión digital en Facebook/Instagram. KFC tiene mayor presencia en exterior. La burbuja de Subway debe verse pequeña en inversión pero con un Share of Search no proporcional a esa desventaja, lo que indica eficiencia relativa.</p>
+            </div>
+            
+            <p class="text-center dark-text fade-in" style="margin-top: 2rem; font-style: italic; font-weight: bold;">"Conocemos la inversión. Ahora debemos medir su impacto: ¿qué tanto genera cada peso invertido en atención del consumidor?"</p>
+        </div>
+    </section>
+
+    <!-- CAPÍTULO 3 -->
+    <section id="capitulo-3" class="mmm-section bg-dark">
+        <div class="container">
+            <h2 class="slide-up white-text text-center">CAPÍTULO 3: <span class="yellow-text">EFICIENCIA E IMPACTO (MMM)</span></h2>
+            <p class="text-center white-text fade-in" style="margin-bottom: 3rem;">¿Qué variables generan impacto real en el interés por Subway?</p>
+            
+            <div class="charts-row">
+                <div class="chart-container wide-chart fade-in">
+                    <h3 class="chart-title">Contribución al Índice de Subway (Valores Reales vs Modelo)</h3>
+                    <canvas id="cap3ContribChart"></canvas>
+                </div>
+            </div>
+            <div class="charts-row">
+                <div class="chart-container fade-in">
+                    <h3 class="chart-title">Coeficientes e Impacto de Variables</h3>
+                    <div id="cap3ModelSummary" style="color:#fff; font-size:1.1rem; text-align: left;">
+                        <!-- JS injected data -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="insight-box fade-in" style="margin-top: 2rem;">
+                <h4><i class="fa-solid fa-chart-line"></i> Insight Estratégico</h4>
+                <p>La inversión digital de Subway tiene un efecto positivo y significativo sobre el Share of Search. La presión competitiva de McDonald's tiene efecto negativo. Nuestro modelo de predicción explica la gran mayoría de las variaciones del índice de Subway.</p>
+            </div>
+            
+            <p class="text-center white-text fade-in" style="margin-top: 2rem; font-style: italic;">"El modelo nos dice qué funciona. Ahora debemos simular qué pasaría si redistribuimos la inversión."</p>
+        </div>
+    </section>
+
+    <!-- CAPÍTULO 4 -->
+    <section id="capitulo-4" class="mmm-section bg-green">
+        <div class="container">
+            <h2 class="slide-up white-text text-center">CAPÍTULO 4: <span class="yellow-text">POSICIONAMIENTO COMPETITIVO</span></h2>
+            <p class="text-center white-text fade-in" style="margin-bottom: 3rem;">¿Dónde está Subway en el mapa competitivo y qué espacio puede apropiarse?</p>
+            
+            <div class="charts-row">
+                <div class="chart-container wide-chart fade-in" style="background:#111;">
+                    <h3 class="chart-title">Perceptual Map: Ejes de Narrativa</h3>
+                    <canvas id="cap4ScatterChart"></canvas>
+                </div>
+            </div>
+
+            <div class="insight-box fade-in" style="margin-top: 2rem;">
+                <h4 style="color:var(--white);"><i class="fa-solid fa-map-location-dot"></i> Insight Estratégico</h4>
+                <p>Subway tiene campañas de producto y app pero sin una narrativa de posicionamiento consistente. El espacio de "healthy convenience" está disponible y no lo ocupa ningún competidor fuerte.</p>
+            </div>
+
+            <p class="text-center white-text fade-in" style="margin-top: 2rem; font-style: italic;">"Sabemos dónde está cada marca y dónde puede ir Subway. Ahora debemos simular qué pasaría si Subway mueve su inversión para capturar ese espacio."</p>
+        </div>
+    </section>
+
+    <!-- CAPÍTULO 5 -->
+    <section id="capitulo-5" class="mmm-section bg-dark">
+        <div class="container">
+            <h2 class="slide-up white-text text-center">CAPÍTULO 5: <span class="yellow-text">SIMULADOR DE ESCENARIOS</span></h2>
+            <p class="text-center white-text fade-in" style="margin-bottom: 3rem;">¿Cómo cambia el Share of Search de Subway si redistribuimos la inversión?</p>
+            
+            <div class="charts-row">
+                <div class="chart-container fade-in">
+                    <h3 class="chart-title">Proyección de Trends por Escenario</h3>
+                    <canvas id="cap5BarChart"></canvas>
+                </div>
+            </div>
+
+            <div class="insight-box fade-in" style="margin-top: 2rem;">
+                <h4><i class="fa-solid fa-gamepad"></i> Insight Estratégico</h4>
+                <p>Hay un punto óptimo de inversión digital donde el retorno marginal empieza a caer. Un aumento del 30% en digital genera más retorno que cualquier otro escenario. La presión competitiva de McDonald's requiere una respuesta de inversión desproporcionada para neutralizarse.</p>
+            </div>
+
+            <p class="text-center white-text fade-in" style="margin-top: 2rem; font-style: italic;">"Los escenarios muestran qué hacer con el presupuesto. Las conclusiones integran todo en un sistema de decisión."</p>
+        </div>
+    </section>
+
+    <!-- CAPÍTULO 6 -->
+    <section id="capitulo-6" class="mmm-section bg-yellow">
+        <div class="container">
+            <h2 class="slide-up dark-text text-center">CAPÍTULO 6: <span class="white-text">SISTEMA DE DECISIÓN</span></h2>
+            <p class="text-center dark-text fade-in" style="margin-bottom: 3rem;">¿Qué debe hacer Subway?</p>
+            
+            <div class="insights-grid fade-in">
+                <div class="insight-box" style="background:#1a1a1a; border-left-color: var(--subway-green);">
+                    <h4 style="color:var(--white);">1. Inversión</h4>
+                    <p>El canal digital genera el mayor retorno marginal para Subway pero muestra riesgo de saturación rápida. Debe incrementarse hasta el punto óptimo del +30%.</p>
+                </div>
+                <div class="insight-box" style="background:#1a1a1a; border-left-color: var(--subway-green);">
+                    <h4 style="color:var(--white);">2. Posicionamiento</h4>
+                    <p>Subway debe apropiarse urgentemente del espacio "Healthy Convenience" en digital, diferenciándose de la indulgencia masiva de McDonald's y KFC.</p>
+                </div>
+                <div class="insight-box" style="background:#1a1a1a; border-left-color: var(--subway-green);">
+                    <h4 style="color:var(--white);">3. Eficiencia</h4>
+                    <p>El ROI digital estimado de Subway supera en eficiencia marginal a McDonald's, compensando el menor presupuesto mediante un enfoque muy segmentado en Social Media.</p>
+                </div>
+                <div class="insight-box" style="background:#1a1a1a; border-left-color: var(--subway-green);">
+                    <h4 style="color:var(--white);">4. Riesgo</h4>
+                    <p>Una escalada publicitaria de McDonald's puede opacar a Subway fácilmente. La respuesta no es gastar más, sino cambiar el posicionamiento hacia donde McDonald's no puede competir.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusiones Estratégicas -->
+    <section id="estrategia" class="strategy bg-green">
+        <div class="container">
+            <h2 class="slide-up">NUESTRO MOVIMIENTO <span class="yellow-text">ESTRATÉGICO</span></h2>
+            
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>1. Optimización Digital</h3>
+                        <p>Redirigir recursos hacia plataformas de video y formatos interactivos (Subway Series) para contrarrestar el alcance masivo tradicional de KFC y McDonald's.</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>2. Retar el Estatus Quo</h3>
+                        <p>Posicionarnos como la alternativa audaz. Más sabor, más opciones, diseño vibrante.</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>3. Experiencia "Craveable"</h3>
+                        <p>Usar visuales apetitosos (Food Porn) en todos los touchpoints digitales, como el sándwich del video principal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <h2 class="logo">SUBWAY</h2>
+            <p>Análisis de Marketing Exclusivo - 2026</p>
+        </div>
+    </footer>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Leaflet JS & Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="datos_tiendas.js"></script>
+    <script src="mmm_data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
